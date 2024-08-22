@@ -30,7 +30,8 @@ from .serializers import TaskSerializer2, ProducerSerializer, CgArtist2Serialize
 
 
 
-
+def start(request):
+    return render(request, 'index.html')
 
 @api_view(['POST'])
 def addProd(request):

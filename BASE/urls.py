@@ -6,6 +6,7 @@ from .views import get_task2_ids_by_production
 from .views import delTaskId,gettask2Id
 from .views import updateTask2,updatetask2Version
 from .views import createUser
+from .views import start
 from django.contrib.auth.views import LoginView,LogoutView
 # from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -22,7 +23,7 @@ from .views import CustomTokenObtainPairView3
 from .views import CustomTokenObtainPairView2
 urlpatterns = [
     
-   
+    path('',start,name='index'),
     path('productions',prod),
     path('tasks2',gettasks2),
     path('task2/<str:task_id>',gettask2Id),

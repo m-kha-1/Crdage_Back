@@ -26,14 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env=environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-print(os.path.join(BASE_DIR, '.env'))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("SECRET_KEY")
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -74,7 +73,7 @@ ROOT_URLCONF = 'BACKEND.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'BASE/templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -93,18 +92,23 @@ WSGI_APPLICATION = 'BACKEND.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE':env.str("DB_ENGINE"),
+#         'NAME': env.str("DB_NAME"),
+#         'USER': env.str("DB_USER"),
+#         'PASSWORD': env.str("DB_PASSWORD"),
+#         'HOST': env.str("DB_HOST"),
+#         'PORT': env.str("DB_PORT"),
+#     }
+# }
+
+
 DATABASES = {
-    'default': {
-        'ENGINE':env.str("DB_ENGINE"),
-        'NAME': env.str("DB_NAME"),
-        'USER': env.str("DB_USER"),
-        'PASSWORD': env.str("DB_PASSWORD"),
-        'HOST': env.str("DB_HOST"),
-        'PORT': env.str("DB_PORT"),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
-
-
 
 
 # Password validation
@@ -142,12 +146,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'frontend_static'),
 ]
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
