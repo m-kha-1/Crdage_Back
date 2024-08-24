@@ -153,10 +153,10 @@ STATICFILES_DIRS = [
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
-ALLOWED_HOSTS = ['mkha.pythonanywhere.com','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
-CORS_ALLOWED_ORIGINS=['http://localhost:4200']
+CORS_ALLOWED_ORIGINS=['*']
 
 CORS_ALLOW_METHODS = [ 'GET','POST', 'PUT', 'PATCH', 'DELETE']
 
