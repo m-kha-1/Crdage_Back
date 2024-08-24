@@ -17,7 +17,8 @@ from datetime import timedelta
 
 
 
-
+from dotenv import load_dotenv
+import dj_database_url
 
 from pathlib import Path
 
@@ -93,18 +94,22 @@ WSGI_APPLICATION = 'BACKEND.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE':env.str("DB_ENGINE"),
+#         'NAME': env.str("DB_NAME"),
+#         'USER': env.str("DB_USER"),
+#         'PASSWORD': env.str("DB_PASSWORD"),
+#         'HOST': env.str("DB_HOST"),
+#         'PORT': env.str("DB_PORT"),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE':env.str("DB_ENGINE"),
-        'NAME': env.str("DB_NAME"),
-        'USER': env.str("DB_USER"),
-        'PASSWORD': env.str("DB_PASSWORD"),
-        'HOST': env.str("DB_HOST"),
-        'PORT': env.str("DB_PORT"),
-    }
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+       
+    
 }
-
-
 
 
 # Password validation
