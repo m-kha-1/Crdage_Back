@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env=environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-print(os.path.join(BASE_DIR, '.env'))
+# print(os.path.join(BASE_DIR, '.env'))
+print("BASE_DIR :",BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -38,7 +39,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = False
+DEBUG = True
 
 
 
@@ -110,7 +111,7 @@ DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
        
     
-}
+ }
 
 
 # Password validation
@@ -153,8 +154,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'BASE/templates'),
 ]
+print([STATICFILES_DIRS][0])
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -162,7 +164,8 @@ STATICFILES_DIRS = [
 ALLOWED_HOSTS = ['*']
 
 
-CORS_ALLOWED_ORIGINS=['*']
+# CORS_ALLOWED_ORIGINS=['*']
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_METHODS = [ 'GET','POST', 'PUT', 'PATCH', 'DELETE']
 
