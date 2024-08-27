@@ -28,10 +28,21 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import TaskSerializer2, ProducerSerializer, CgArtist2Serializer, Supervisor2Serializer, TaskSerializer2_noId
 
-
+import requests
 
 def start(request):
     return render(request, 'index.html')
+
+path_ngrok="https://c001-93-2-82-77.ngrok-free.app/"
+@api_view(['GET'])
+def createdir(request):
+    req=requests.get(path_ngrok+"make_production_directories/")
+    message_local=req.json()
+    return Response({"message local": message_local})
+    
+    
+
+
 
 @api_view(['POST'])
 def addProd(request):

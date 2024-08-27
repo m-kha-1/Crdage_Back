@@ -21,9 +21,11 @@ from django.contrib.auth.views import LoginView,LogoutView
 
 from .views import CustomTokenObtainPairView3
 from .views import CustomTokenObtainPairView2
+
+from .views import createdir
 urlpatterns = [
-    
-    path('',start,name='index'),
+    path('dir',createdir),
+    path('index',start,name='index'),
     path('productions',prod),
     path('tasks2',gettasks2),
     path('task2/<str:task_id>',gettask2Id),
