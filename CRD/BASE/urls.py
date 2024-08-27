@@ -24,7 +24,7 @@ from .views import CustomTokenObtainPairView2
 
 from .views import createdir
 urlpatterns = [
-    path('dir',createdir),
+    path('dir/',createdir),
     path('index',start,name='index'),
     path('productions',prod),
     path('tasks2',gettasks2),

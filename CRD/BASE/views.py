@@ -33,15 +33,37 @@ import requests
 def start(request):
     return render(request, 'index.html')
 
-path_ngrok="https://c001-93-2-82-77.ngrok-free.app/"
-@api_view(['GET'])
-def createdir(request):
-    req=requests.get(path_ngrok+"make_production_directories/")
-    message_local=req.json()
-    return Response({"message local": message_local})
+path_ngrok="https://1d92-93-2-82-77.ngrok-free.app/"
+# path_ngrok="http://127.0.0.1:8080/"
+# @api_view(['GET'])
+# def createdir(request):
+#     req=requests.get(path_ngrok+"make_production_directories/")
+#     message_local=req.json()
+#     return Response({"message local": message_local})
     
+# @api_view(['POST'])
+# def createdir(request):
+#     if request.method=="POST":
+#         req=requests.post(f'{path_ngrok}make_production_directories/{request.data.get("a")}',json={"a":request.data.get('a')})
+      
+#         # message_local=req.json()
+#         # return Response({"message local": message_local})
+#         return Response({"message":f'{path_ngrok}make_production_directories/{request.data.get("a")}'})
     
 
+@api_view(['POST'])
+def createdir(request):
+    if request.method == "POST":
+        req = requests.post(f'{path_ngrok}make_production_directories/{request.data.get("a")}', json={"a": request.data.get('a')})
+
+        # Vérification si la réponse est en JSON
+        try:
+            message_local = req.json()  # Tente de décoder le JSON
+        except requests.JSONDecodeError:
+            # Si ce n'est pas un JSON valide, renvoie la réponse brute
+            message_local = req.text
+
+        return Response({"message local": message_local})
 
 
 @api_view(['POST'])
