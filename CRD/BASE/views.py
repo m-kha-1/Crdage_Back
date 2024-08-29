@@ -33,8 +33,8 @@ import requests
 def start(request):
     return render(request, 'index.html')
 
-# path_ngrok="https://1d92-93-2-82-77.ngrok-free.app/"
-path_ngrok="http://127.0.0.1:8080/"
+path_ngrok="https://b35e-93-2-82-77.ngrok-free.app/"
+# path_ngrok="http://127.0.0.1:8080/"
 # @api_view(['GET'])
 # def createdir(request):
 #     req=requests.get(path_ngrok+"make_production_directories/")
