@@ -7,6 +7,7 @@ from .views import delTaskId,gettask2Id
 from .views import updateTask2,updatetask2Version
 from .views import createUser
 from .views import start
+from .views import createProd
 from django.contrib.auth.views import LoginView,LogoutView
 # from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -23,8 +24,11 @@ from .views import CustomTokenObtainPairView3
 from .views import CustomTokenObtainPairView2
 
 from .views import createdir
+from .views import createTask
 urlpatterns = [
     path('dir/',createdir),
+    # path('pr/',createProd),
+    # path('tk/',createTask),
     path('index',start,name='index'),
     path('productions',prod),
     path('tasks2',gettasks2),
@@ -53,11 +57,13 @@ urlpatterns = [
     path('updatetask2version/<str:id>/', updatetask2Version),
     
     #joute une productions
-    path('change',addProd),
+    # path('change',addProd),
+    path('change',createProd),
     
     
     #creation tache
-    path('newtask2',newTask2),
+    # path('newtask2',newTask2),
+    path('newtask2',createTask),
     
     
     path('get_prod_id/<int:task_id>/', get_PRODUCTION_id, name='get_production_id'),

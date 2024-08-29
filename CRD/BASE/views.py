@@ -33,8 +33,8 @@ import requests
 def start(request):
     return render(request, 'index.html')
 
-path_ngrok="https://1d92-93-2-82-77.ngrok-free.app/"
-# path_ngrok="http://127.0.0.1:8080/"
+# path_ngrok="https://1d92-93-2-82-77.ngrok-free.app/"
+path_ngrok="http://127.0.0.1:8080/"
 # @api_view(['GET'])
 # def createdir(request):
 #     req=requests.get(path_ngrok+"make_production_directories/")
@@ -67,6 +67,32 @@ def createdir(request):
 
 
 @api_view(['POST'])
+def createProd(request):
+    serializer=ProdSerializer(data=request.data)
+    
+    
+    if serializer.is_valid():
+        serializer.save()
+        
+    pathProduction=serializer.validated_data.get("name")
+    
+    if request.method == "POST":
+                req = requests.post(f'{path_ngrok}make_production_directories/{pathProduction}', json={"a": pathProduction})
+
+                try:
+                        message_local = req.json()  # Tente de décoder le JSON
+                except requests.JSONDecodeError:
+                        # Si ce n'est pas un JSON valide, renvoie la réponse brute
+                        message_local = req.text
+            
+    
+    return Response (serializer.data)
+
+
+
+
+
+@api_view(['POST'])
 def addProd(request):
     serializer=ProdSerializer(data=request.data)
    
@@ -94,8 +120,7 @@ def addProd(request):
 
 @api_view(['POST'])
 def newTask2(request):
-    
-    
+     
     main_folder =e.str("PROJECT_LOC")
     #TaskSerializer2 pour la creation de la tache
     serializer=TaskSerializer2(data=request.data)
@@ -103,15 +128,11 @@ def newTask2(request):
     #TaskSerializer2_noId pour obtenir nom du cgartist et nom production relative et non leur id 
     serializerNoId=TaskSerializer2_noId(data=request.data)
     
- 
-   
     if serializerNoId.is_valid():
         serializerNoId.save()
-
-        
+ 
         print("data serialisées",serializerNoId.data)
         
-
         nameProduction=serializerNoId.data["production_name"]
         print(nameProduction)
         nameCgArtist=serializerNoId.data["cgArtist_name"]
@@ -126,7 +147,6 @@ def newTask2(request):
         print("nameCgArtist:", nameCgArtist)
         
      
-        
         pathTask_work=os.path.join(main_folder,nameProduction,nametaskType,nametask,"WORK",nameCgArtist,"scenes")
         pathTask_publish=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","scenes") 
         pathTask_publish_images=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","images","V01") 
@@ -149,6 +169,95 @@ def newTask2(request):
       
 
     return Response (serializerNoId.data)
+
+
+
+
+@api_view(['POST'])
+def createProdJETER(request):
+    serializer=ProdSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()     
+    pathProduction=serializer.validated_data.get("name") 
+    if request.method == "POST":
+                req = requests.post(f'{path_ngrok}make_production_directories/{pathProduction}', json={"a": pathProduction})
+                try:
+                        message_local = req.json()  # Tente de décoder le JSON
+                except requests.JSONDecodeError:
+                        # Si ce n'est pas un JSON valide, renvoie la réponse brute
+                        message_local = req.text 
+    return Response (serializer.data)
+####new createtask
+
+@api_view(['POST'])
+def createTask(request):
+    
+    
+    serializer=TaskSerializer2(data=request.data)
+    if serializer.is_valid():
+        serializer.save() 
+    
+    idDeProd=serializer.data["PRODUCTIONId"]
+    # idDeProd = serializer.validated_data.get("PRODUCTIONId")
+    print("idDeProd=", serializer.data)
+    # dataProd = PRODUCTION.objects.get(id=idDeProd)
+ 
+    production = PRODUCTION.objects.get(id=idDeProd)
+    
+    serializerP=ProdSerializer(production,many=False)
+    
+    nameOfProduction=serializerP.data["name"]
+    
+    
+    nametask=serializer.data["name"]
+    nametaskType=serializer.data["type"]
+    # nameCgArtist=serializer.data["cgArtist_name"]
+    nameCgArtist=serializer.validated_data.get("cgArtist3Id")
+
+    
+    
+    if request.method == "POST":
+                req = requests.post(f'{path_ngrok}make_task_directories/{nameOfProduction}/{nametask}/{nametaskType}/{nameCgArtist}', json={"a": [nameOfProduction,nametask]})
+    
+    #TaskSerializer2 pour la creation de la tache
+    serializer=TaskSerializer2(data=request.data)
+    
+    #TaskSerializer2_noId pour obtenir nom du cgartist et nom production relative et non leur id 
+    serializerNoId=TaskSerializer2_noId(data=request.data)
+    
+ 
+   
+    if serializerNoId.is_valid():
+        serializerNoId.save()
+
+        
+        print("data serialisées",serializerNoId.data)
+        
+
+        nameProduction=serializerNoId.data["production_name"]
+    
+        nameCgArtist=serializerNoId.data["cgArtist_name"]
+        
+        nametaskType=serializerNoId.data["type"]
+        
+        nametask=serializerNoId.data["name"]
+        
+     
+
+        
+     
+            
+      
+
+    return Response (serializerNoId.data)
+
+
+
+
+
+
+#####
+
 
 
 
