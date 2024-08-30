@@ -121,7 +121,7 @@ def addProd(request):
 @api_view(['POST'])
 def newTask2(request):
      
-    main_folder =e.str("PROJECT_LOC")
+    # main_folder =e.str("PROJECT_LOC")
     #TaskSerializer2 pour la creation de la tache
     serializer=TaskSerializer2(data=request.data)
     
@@ -141,30 +141,30 @@ def newTask2(request):
         
         nametask=serializerNoId.data["name"]
         
-        print("main_folder:", main_folder)
-        print("nameProduction:", nameProduction)
-        print("nameTaskType:", nametaskType)
-        print("nameCgArtist:", nameCgArtist)
+        # print("main_folder:", main_folder)
+        # print("nameProduction:", nameProduction)
+        # print("nameTaskType:", nametaskType)
+        # print("nameCgArtist:", nameCgArtist)
         
      
-        pathTask_work=os.path.join(main_folder,nameProduction,nametaskType,nametask,"WORK",nameCgArtist,"scenes")
-        pathTask_publish=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","scenes") 
-        pathTask_publish_images=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","images","V01") 
+        # pathTask_work=os.path.join(main_folder,nameProduction,nametaskType,nametask,"WORK",nameCgArtist,"scenes")
+        # pathTask_publish=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","scenes") 
+        # pathTask_publish_images=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","images","V01") 
        
-        if not os.path.exists(pathTask_work):
-            os.makedirs(pathTask_work)
-        if not os.path.exists(pathTask_publish):
-            os.makedirs(pathTask_publish)
-        if not os.path.exists(pathTask_publish_images):
-            os.makedirs(pathTask_publish_images)
+        # if not os.path.exists(pathTask_work):
+        #     os.makedirs(pathTask_work)
+        # if not os.path.exists(pathTask_publish):
+        #     os.makedirs(pathTask_publish)
+        # if not os.path.exists(pathTask_publish_images):
+        #     os.makedirs(pathTask_publish_images)
         
-        fileName=nametaskType+"_"+nametask+"_V001"
-        print("fileName:", fileName)
-        shutil.copy("C:\\CORD\\scripts\\empty.blend",pathTask_publish+"\\"+nametaskType+"_"+nametask+"_V01.blend")
-        shutil.copy("C:\\CORD\\empty.png",pathTask_publish_images+"\\"+nametaskType+"_"+nametask+"_V01.png")
+        # fileName=nametaskType+"_"+nametask+"_V001"
+        # print("fileName:", fileName)
+        # shutil.copy("C:\\CORD\\scripts\\empty.blend",pathTask_publish+"\\"+nametaskType+"_"+nametask+"_V01.blend")
+        # shutil.copy("C:\\CORD\\empty.png",pathTask_publish_images+"\\"+nametaskType+"_"+nametask+"_V01.png")
         
         
-        print("path copy",pathTask_publish+"\\"+nametaskType+"_"+nametask+"_V001.blend")
+        # print("path copy",pathTask_publish+"\\"+nametaskType+"_"+nametask+"_V001.blend")
             
       
 
