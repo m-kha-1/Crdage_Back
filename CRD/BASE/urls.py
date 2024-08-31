@@ -63,8 +63,8 @@ urlpatterns = [
     
     #creation tache
     # path('newtask2',newTask2),
-    # path('newtask2',createTask),
-    path('newtask2',newTask2),
+    path('newtask2',createTask),
+    # path('newtask2',newTask2),
     
     
     path('get_prod_id/<int:task_id>/', get_PRODUCTION_id, name='get_production_id'),
