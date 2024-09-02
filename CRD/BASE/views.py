@@ -102,13 +102,37 @@ def call_listei(request, nameprod, nametask, nametasktype):
 
 
 
+def change_path(local_path):
+    base_local_path = "C:\\cordage_service\\crdage_local\\media"
+    base_url = "http://localhost:8080/media"
+    # Remplacer la partie du chemin local par l'URL de base
+    url_path = local_path.replace(base_local_path, base_url)
+    # Remplacer les backslashes par des slashes pour l'URL
+    url_path = url_path.replace('\\', '/')
+    return url_path
+
+
 @api_view(['GET'])
 def call_listes(request, nameprod, nametask, nametasktype):
-    req=requests.get(f'{path_ngrok}listes/{nameprod}/{nametask}/{nametasktype}')
-    if req.status_code == 200:
-        return Response (req.json(),status=200)
-    else:
-        return Response ({"error":"no scenes found"})
+    
+    try:
+    
+        req=requests.get(f'{path_ngrok}listes/{nameprod}/{nametask}/{nametasktype}')
+        if req.status_code == 200:
+            
+            images_paths=req.json()
+            converted_paths=[change_path(path) for path in images_paths]
+            
+            
+            
+            return Response (converted_paths,status=200)
+        else:
+            return Response ({"error":"no scenes found"},status=req.status_code)
+        
+    
+        
+    except requests.exceptions.RequestException as e:
+            return Response({"error": str(e)}, status=500)
 
 
 
