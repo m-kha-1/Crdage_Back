@@ -136,6 +136,11 @@ def call_listei(request, nameprod, nametask, nametasktype):
 
 
 
+# @api_view(['POST'])
+def launch_scene(request):
+    requests.post(f'{path_ngrok}lancer_scene/')
+    return Response({"ouverture scene":"success"})
+
 
 
 

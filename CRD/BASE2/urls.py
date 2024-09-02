@@ -7,7 +7,6 @@ urlpatterns = [
     path('liste-scenes2/<str:organization>/<str:np>/<str:tt>/<str:nt>/', liste_scenes2, name='liste_fichiers'),
     path('liste-images/<str:organization>/<str:np>/<str:tt>/<str:nt>/', liste_images, name='liste_images'),
     path('image_production/<str:np>/', image_production, name='image_production'),
-    path('api/lancer_scene/', lancer_scene, name='lancer_scene'),
     path('api/get_stockage/<str:name_name>/', get_stockage),
 
 

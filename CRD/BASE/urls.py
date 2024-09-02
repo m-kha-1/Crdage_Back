@@ -26,6 +26,7 @@ from .views import CustomTokenObtainPairView2
 
 from .views import createdir
 from .views import createTask
+from .views import launch_scene
 urlpatterns = [
     path('dir/',createdir),
     # path('pr/',createProd),
@@ -84,6 +85,7 @@ urlpatterns = [
     
     path('call_listei/<str:nameprod>/<str:nametask>/<str:nametasktype>',call_listei,name="call_listei"),
     path('call_listes/<str:nameprod>/<str:nametask>/<str:nametasktype>',call_listes,name="call_listes"),
+    path('launch_scene/',launch_scene, name='lancer_scene'),
 
     
 
