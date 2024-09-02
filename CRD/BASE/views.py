@@ -34,7 +34,8 @@ def start(request):
     return render(request, 'index.html')
 
 
-path_ngrok="https://f87f-93-2-82-77.ngrok-free.app/"
+# path_ngrok="https://f87f-93-2-82-77.ngrok-free.app/"
+path_ngrok="https://f343-93-2-82-77.ngrok-free.app/"
 # path_ngrok="http://127.0.0.1:8080/"
 # @api_view(['GET'])
 # def createdir(request):
@@ -88,6 +89,12 @@ def createProd(request):
             
     
     return Response (serializer.data)
+
+
+@api_view(['GET'])
+def call_listei(request, nameprod, nametask, nametasktype):
+    requests.get(f'{path_ngrok}listei/{nameprod}/{nametask}/{nametasktype}')
+
 
 
 
@@ -228,20 +235,20 @@ def createTask(request):
     
  
    
-    if serializerNoId.is_valid():
-        serializerNoId.save()
+    # if serializerNoId.is_valid():
+    #     serializerNoId.save()
 
         
-        print("data serialisées",serializerNoId.data)
+    #     print("data serialisées",serializerNoId.data)
         
 
-        nameProduction=serializerNoId.data["production_name"]
+    #     nameProduction=serializerNoId.data["production_name"]
     
-        nameCgArtist=serializerNoId.data["cgArtist_name"]
+    #     nameCgArtist=serializerNoId.data["cgArtist_name"]
         
-        nametaskType=serializerNoId.data["type"]
+    #     nametaskType=serializerNoId.data["type"]
         
-        nametask=serializerNoId.data["name"]
+    #     nametask=serializerNoId.data["name"]
         
      
 

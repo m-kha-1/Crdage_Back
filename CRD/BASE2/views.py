@@ -205,6 +205,8 @@ def liste_images(request, organization, np, tt, nt):
 def liste_images(request,organization, np, tt, nt):
    
     stockage=Stockage.objects.get(name=organization)
+    
+    
     print ("stockage:",stockage.media_root)
     base_dir = os.path.join(stockage.media_root, np, tt, nt, 'PUBLISH')
     # base_url = request.build_absolute_uri('/serve_file/')
