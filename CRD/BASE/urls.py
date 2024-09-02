@@ -30,7 +30,7 @@ urlpatterns = [
     path('dir/',createdir),
     # path('pr/',createProd),
     # path('tk/',createTask),
-    path('index',start,name='index'),
+    # path('index',start,name='index'),
     path('productions',prod),
     path('tasks2',gettasks2),
     path('task2/<str:task_id>',gettask2Id),
