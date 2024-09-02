@@ -102,6 +102,17 @@ def call_listei(request, nameprod, nametask, nametasktype):
 
 
 
+@api_view(['GET'])
+def call_listes(request, nameprod, nametask, nametasktype):
+    req=requests.get(f'{path_ngrok}listes/{nameprod}/{nametask}/{nametasktype}')
+    if req.status_code == 200:
+        return Response (req.json(),status=200)
+    else:
+        return Response ({"error":"no scenes found"})
+
+
+
+
 
 
 @api_view(['POST'])

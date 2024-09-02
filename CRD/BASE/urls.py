@@ -8,7 +8,7 @@ from .views import updateTask2,updatetask2Version
 from .views import createUser
 from .views import start
 from .views import createProd
-from .views import call_listei
+from .views import call_listei,call_listes
 from django.contrib.auth.views import LoginView,LogoutView
 # from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -83,6 +83,7 @@ urlpatterns = [
     path('api/auth/token/', CustomTokenObtainPairView3.as_view(), name='token_obtain_pair'),
     
     path('call_listei/<str:nameprod>/<str:nametask>/<str:nametasktype>',call_listei,name="call_listei"),
+    path('call_listes/<str:nameprod>/<str:nametask>/<str:nametasktype>',call_listes,name="call_listes"),
 
     
 
