@@ -136,11 +136,28 @@ def call_listei(request, nameprod, nametask, nametasktype):
 
 
 
-# @api_view(['POST'])
+@api_view(['POST'])
 def launch_scene(request):
-    requests.post(f'{path_ngrok}lancer_scene/')
-    return Response({"ouverture scene":"success"})
+    # Extraire le chemin du fichier .blend des données POST reçues
+    blend_file_path = request.data.get('blend_file_path')
 
+    if not blend_file_path:
+        return Response({"error": "blend_file_path is required"}, status=400)
+
+    try:
+        # Envoyer la requête POST à l'API 'lancer_scene' avec le chemin du fichier
+        response = requests.post(f'{path_ngrok}lancer_scene/', json={"blend_file_path": blend_file_path})
+        
+        # Vérifier si la requête a réussi
+        if response.status_code == 200:
+            return Response({"ouverture scene": "success"}, status=200)
+        else:
+            # Gérer le cas où la requête à l'API échoue
+            return Response({"ouverture scene": "failed", "details": response.text}, status=response.status_code)
+    
+    except requests.exceptions.RequestException as e:
+        # Gérer les exceptions liées à la requête HTTP
+        return Response({"error": str(e)}, status=500)
 
 
 
