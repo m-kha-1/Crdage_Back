@@ -35,8 +35,8 @@ def start(request):
 
 
 # path_ngrok="https://f87f-93-2-82-77.ngrok-free.app/"
-path_ngrok="https://f343-93-2-82-77.ngrok-free.app/"
-# path_ngrok="http://127.0.0.1:8080/"
+# path_ngrok="https://f343-93-2-82-77.ngrok-free.app/"
+path_ngrok="http://127.0.0.1:8080/"
 # @api_view(['GET'])
 # def createdir(request):
 #     req=requests.get(path_ngrok+"make_production_directories/")
@@ -146,7 +146,7 @@ def launch_scene(request):
 
     try:
         # Envoyer la requête POST à l'API 'lancer_scene' avec le chemin du fichier
-        response = requests.post(f'{path_ngrok}lancer_scene/', json={"blend_file_path": blend_file_path})
+        response = requests.post(f'{path_ngrok}lancer_scene', json={"blend_file_path": blend_file_path})
         
         # Vérifier si la requête a réussi
         if response.status_code == 200:
