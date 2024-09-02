@@ -93,7 +93,11 @@ def createProd(request):
 
 @api_view(['GET'])
 def call_listei(request, nameprod, nametask, nametasktype):
-    requests.get(f'{path_ngrok}listei/{nameprod}/{nametask}/{nametasktype}')
+    req=requests.get(f'{path_ngrok}listei/{nameprod}/{nametask}/{nametasktype}')
+    if req.status_code == 200:
+        return Response (req.json(),status=200)
+    else:
+        return Response ({"error":"no images found"})
 
 
 
