@@ -92,12 +92,12 @@ def createProd(request):
 
 
 @api_view(['GET'])
-def call_listei(request, nameprod, nametask, nametasktype):
-    req=requests.get(f'{path_ngrok}listei/{nameprod}/{nametask}/{nametasktype}')
+def call_listes(request, nameprod, nametask, nametasktype):
+    req=requests.get(f'{path_ngrok}listes/{nameprod}/{nametask}/{nametasktype}')
     if req.status_code == 200:
         return Response (req.json(),status=200)
     else:
-        return Response ({"error":"no images found"})
+        return Response ({"error":"no scenes found"})
 
 
 
@@ -113,11 +113,11 @@ def change_path(local_path):
 
 
 @api_view(['GET'])
-def call_listes(request, nameprod, nametask, nametasktype):
+def call_listei(request, nameprod, nametask, nametasktype):
     
     try:
     
-        req=requests.get(f'{path_ngrok}listes/{nameprod}/{nametask}/{nametasktype}')
+        req=requests.get(f'{path_ngrok}listei/{nameprod}/{nametask}/{nametasktype}')
         if req.status_code == 200:
             
             images_paths=req.json()
@@ -127,7 +127,7 @@ def call_listes(request, nameprod, nametask, nametasktype):
             
             return Response (converted_paths,status=200)
         else:
-            return Response ({"error":"no scenes found"},status=req.status_code)
+            return Response ({"error":"no images found"},status=req.status_code)
         
     
         
