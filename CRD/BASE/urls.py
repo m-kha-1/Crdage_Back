@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import prod,addProd,prodId,delId,updateId,get_PRODUCTION_id,get_producer,get_artists,get_supervisors,newTask2
+from .views import prod,prodId,delId,updateId,get_PRODUCTION_id,get_producer,get_artists,get_supervisors
 
 from .views import gettasks2
 from .views import get_task2_ids_by_production
