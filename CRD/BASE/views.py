@@ -258,68 +258,96 @@ def createProdJETER(request):
                         message_local = req.text 
     return Response (serializer.data)
 ####new createtask
-
 @api_view(['POST'])
 def createTask(request):
+    serializer = TaskSerializer2(data=request.data)
     
-    
-    serializer=TaskSerializer2(data=request.data)
     if serializer.is_valid():
-        serializer.save() 
+        serializer.save()
+        
+        # Assurez-vous d'obtenir l'ID de la production ici
+        # idDeProd = serializer.validated_data.get("PRODUCTIONId")
+        idDeProd=serializer.data["PRODUCTIONId"]
+        print("idDeProd=", idDeProd, "type:", type(idDeProd))  # Ajouter ce type de log pour déboguer
+        
+        # Récupérer l'objet PRODUCTION
+        production = PRODUCTION.objects.get(id=idDeProd)
+        print("production=", production, "type:", type(production))
+        
+        # Sérialiser l'objet PRODUCTION
+        serializerP = ProdSerializer(production, many=False)
+        nameOfProduction = serializerP.data["name"]
+        
+        nametask = serializer.validated_data.get("name")
+        nametaskType = serializer.validated_data.get("type")
+        nameCgArtist = serializer.validated_data.get("cgArtist3Id")
+        
+        if request.method == "POST":
+            requests.post(
+                f'{path_ngrok}make_task_directories/{nameOfProduction}/{nametask}/{nametaskType}/{nameCgArtist}', 
+                json={"a": [nameOfProduction, nametask]}
+            )
+        
+        return Response(serializer.data)
     
-    idDeProd=serializer.data["PRODUCTIONId"]
-    # idDeProd = serializer.validated_data.get("PRODUCTIONId")
-    print("idDeProd=", serializer.data)
-    # dataProd = PRODUCTION.objects.get(id=idDeProd)
+    return Response(serializer.errors, status=400)
+
+
+# @api_view(['POST'])
+# def createTask(request):
+    
+    
+#     serializer=TaskSerializer2(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save() 
+    
+#     idDeProd=serializer.data["PRODUCTIONId"]
+#     # idDeProd = serializer.validated_data.get("PRODUCTIONId")
+#     print("idDeProd=", serializer.data)
+#     # dataProd = PRODUCTION.objects.get(id=idDeProd)
  
-    production = PRODUCTION.objects.get(id=idDeProd)
+#     production = PRODUCTION.objects.get(id=idDeProd)
     
-    serializerP=ProdSerializer(production,many=False)
+#     serializerP=ProdSerializer(production,many=False)
     
-    nameOfProduction=serializerP.data["name"]
+#     nameOfProduction=serializerP.data["name"]
     
     
-    nametask=serializer.data["name"]
-    nametaskType=serializer.data["type"]
-    # nameCgArtist=serializer.data["cgArtist_name"]
-    nameCgArtist=serializer.validated_data.get("cgArtist3Id")
+#     nametask=serializer.data["name"]
+#     nametaskType=serializer.data["type"]
+#     # nameCgArtist=serializer.data["cgArtist_name"]
+#     nameCgArtist=serializer.validated_data.get("cgArtist3Id")
 
     
     
-    if request.method == "POST":
-                req = requests.post(f'{path_ngrok}make_task_directories/{nameOfProduction}/{nametask}/{nametaskType}/{nameCgArtist}', json={"a": [nameOfProduction,nametask]})
+#     if request.method == "POST":
+#                 req = requests.post(f'{path_ngrok}make_task_directories/{nameOfProduction}/{nametask}/{nametaskType}/{nameCgArtist}', json={"a": [nameOfProduction,nametask]})
     
-    #TaskSerializer2 pour la creation de la tache
-    serializer=TaskSerializer2(data=request.data)
+#     #TaskSerializer2 pour la creation de la tache
+#     serializer=TaskSerializer2(data=request.data)
     
-    #TaskSerializer2_noId pour obtenir nom du cgartist et nom production relative et non leur id 
-    serializerNoId=TaskSerializer2_noId(data=request.data)
+#     #TaskSerializer2_noId pour obtenir nom du cgartist et nom production relative et non leur id 
+#     serializerNoId=TaskSerializer2_noId(data=request.data)
     
  
    
-    # if serializerNoId.is_valid():
-    #     serializerNoId.save()
+#     # if serializerNoId.is_valid():
+#     #     serializerNoId.save()
 
         
-    #     print("data serialisées",serializerNoId.data)
+#     #     print("data serialisées",serializerNoId.data)
         
 
-    #     nameProduction=serializerNoId.data["production_name"]
+#     #     nameProduction=serializerNoId.data["production_name"]
     
-    #     nameCgArtist=serializerNoId.data["cgArtist_name"]
+#     #     nameCgArtist=serializerNoId.data["cgArtist_name"]
         
-    #     nametaskType=serializerNoId.data["type"]
+#     #     nametaskType=serializerNoId.data["type"]
         
-    #     nametask=serializerNoId.data["name"]
-        
-     
-
-        
-     
-            
+#     #     nametask=serializerNoId.data["name"]
       
 
-    return Response (serializerNoId.data)
+#     return Response (serializerNoId.data)
 
 
 
