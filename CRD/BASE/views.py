@@ -36,7 +36,7 @@ def start(request):
 
 # path_ngrok="https://f87f-93-2-82-77.ngrok-free.app/"
 # path_ngrok="http://127.0.0.1:8080/"
-path_ngrok="https://b99e-93-2-82-77.ngrok-free.app/"
+path_ngrok="34f3-93-2-82-77.ngrok-free.app/"
 
 # @api_view(['GET'])
 # def createdir(request):
