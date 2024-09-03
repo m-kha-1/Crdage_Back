@@ -28,10 +28,7 @@ from .views import createdir
 from .views import createTask
 from .views import launch_scene
 urlpatterns = [
-    path('dir/',createdir),
-    # path('pr/',createProd),
-    # path('tk/',createTask),
-    # path('index',start,name='index'),
+  
     path('productions',prod),
     path('tasks2',gettasks2),
     path('task2/<str:task_id>',gettask2Id),
@@ -58,15 +55,12 @@ urlpatterns = [
     path('updatetask2/<str:task2_id>/', updateTask2),
     path('updatetask2version/<str:id>/', updatetask2Version),
     
-    #joute une productions
-    # path('change',addProd),
+    #joute une production
     path('change',createProd),
     
     
-    #creation tache
-    # path('newtask2',newTask2),
+     #joute une task
     path('newtask2',createTask),
-    # path('newtask2',newTask2),
     
     
     path('get_prod_id/<int:task_id>/', get_PRODUCTION_id, name='get_production_id'),
@@ -76,11 +70,11 @@ urlpatterns = [
     #obtient les tâches liées à une production à partir de son ID
     path('get_task2_ids_by_production/<int:production_id>/', get_task2_ids_by_production, name='get_task2_ids_by_production'),
 
-    ##auth
+    #creation user
     path('createuser', createUser, name='createuser'),
     
-    # path('login/', login, name='login'),
-    
+  
+    #files management
     path('api/auth/token/', CustomTokenObtainPairView3.as_view(), name='token_obtain_pair'),
     
     path('call_listei/<str:nameprod>/<str:nametask>/<str:nametasktype>',call_listei,name="call_listei"),

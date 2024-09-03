@@ -162,101 +162,7 @@ def launch_scene(request):
 
 
 
-@api_view(['POST'])
-def addProd(request):
-    serializer=ProdSerializer(data=request.data)
-   
-    
-    if serializer.is_valid():
-        serializer.save()
-        
-   
-    main_folder =e.str("PROJECT_LOC")
-    print(main_folder)
-   
-    
-    pathProduction=serializer.validated_data.get("name")
-    print(pathProduction)
-    pathProduction=os.path.join(main_folder,pathProduction)
-    print(pathProduction)
-    subfolders = ["lighting", "animation", "modelling","fx","compositing","surfacing","rigging"]
-    for subfolder in subfolders:
-        os.makedirs(os.path.join(pathProduction, subfolder), exist_ok=True)  
-        print("dossiers crees") 
-    
-    
-    return Response (serializer.data)
 
-
-@api_view(['POST'])
-def newTask2(request):
-     
-    # main_folder =e.str("PROJECT_LOC")
-    #TaskSerializer2 pour la creation de la tache
-    serializer=TaskSerializer2(data=request.data)
-    
-    #TaskSerializer2_noId pour obtenir nom du cgartist et nom production relative et non leur id 
-    serializerNoId=TaskSerializer2_noId(data=request.data)
-    
-    if serializerNoId.is_valid():
-        serializerNoId.save()
- 
-        print("data serialisées",serializerNoId.data)
-        
-        nameProduction=serializerNoId.data["production_name"]
-        print(nameProduction)
-        nameCgArtist=serializerNoId.data["cgArtist_name"]
-        
-        nametaskType=serializerNoId.data["type"]
-        
-        nametask=serializerNoId.data["name"]
-        
-        # print("main_folder:", main_folder)
-        # print("nameProduction:", nameProduction)
-        # print("nameTaskType:", nametaskType)
-        # print("nameCgArtist:", nameCgArtist)
-        
-     
-        # pathTask_work=os.path.join(main_folder,nameProduction,nametaskType,nametask,"WORK",nameCgArtist,"scenes")
-        # pathTask_publish=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","scenes") 
-        # pathTask_publish_images=os.path.join(main_folder,nameProduction,nametaskType,nametask,"PUBLISH","images","V01") 
-       
-        # if not os.path.exists(pathTask_work):
-        #     os.makedirs(pathTask_work)
-        # if not os.path.exists(pathTask_publish):
-        #     os.makedirs(pathTask_publish)
-        # if not os.path.exists(pathTask_publish_images):
-        #     os.makedirs(pathTask_publish_images)
-        
-        # fileName=nametaskType+"_"+nametask+"_V001"
-        # print("fileName:", fileName)
-        # shutil.copy("C:\\CORD\\scripts\\empty.blend",pathTask_publish+"\\"+nametaskType+"_"+nametask+"_V01.blend")
-        # shutil.copy("C:\\CORD\\empty.png",pathTask_publish_images+"\\"+nametaskType+"_"+nametask+"_V01.png")
-        
-        
-        # print("path copy",pathTask_publish+"\\"+nametaskType+"_"+nametask+"_V001.blend")
-            
-      
-
-    return Response (serializerNoId.data)
-
-
-
-
-@api_view(['POST'])
-def createProdJETER(request):
-    serializer=ProdSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()     
-    pathProduction=serializer.validated_data.get("name") 
-    if request.method == "POST":
-                req = requests.post(f'{path_ngrok}make_production_directories/{pathProduction}', json={"a": pathProduction})
-                try:
-                        message_local = req.json()  # Tente de décoder le JSON
-                except requests.JSONDecodeError:
-                        # Si ce n'est pas un JSON valide, renvoie la réponse brute
-                        message_local = req.text 
-    return Response (serializer.data)
 ####new createtask
 @api_view(['POST'])
 def createTask(request):
@@ -265,16 +171,15 @@ def createTask(request):
     if serializer.is_valid():
         serializer.save()
         
-        # Assurez-vous d'obtenir l'ID de la production ici
-        # idDeProd = serializer.validated_data.get("PRODUCTIONId")
+  
         idDeProd=serializer.data["PRODUCTIONId"]
         print("idDeProd=", idDeProd, "type:", type(idDeProd))  # Ajouter ce type de log pour déboguer
         
-        # Récupérer l'objet PRODUCTION
+        # Récupérer objet PRODUCTION
         production = PRODUCTION.objects.get(id=idDeProd)
         print("production=", production, "type:", type(production))
         
-        # Sérialiser l'objet PRODUCTION
+        # Sérialiser objet PRODUCTION
         serializerP = ProdSerializer(production, many=False)
         nameOfProduction = serializerP.data["name"]
         
@@ -293,68 +198,6 @@ def createTask(request):
     return Response(serializer.errors, status=400)
 
 
-# @api_view(['POST'])
-# def createTask(request):
-    
-    
-#     serializer=TaskSerializer2(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save() 
-    
-#     idDeProd=serializer.data["PRODUCTIONId"]
-#     # idDeProd = serializer.validated_data.get("PRODUCTIONId")
-#     print("idDeProd=", serializer.data)
-#     # dataProd = PRODUCTION.objects.get(id=idDeProd)
- 
-#     production = PRODUCTION.objects.get(id=idDeProd)
-    
-#     serializerP=ProdSerializer(production,many=False)
-    
-#     nameOfProduction=serializerP.data["name"]
-    
-    
-#     nametask=serializer.data["name"]
-#     nametaskType=serializer.data["type"]
-#     # nameCgArtist=serializer.data["cgArtist_name"]
-#     nameCgArtist=serializer.validated_data.get("cgArtist3Id")
-
-    
-    
-#     if request.method == "POST":
-#                 req = requests.post(f'{path_ngrok}make_task_directories/{nameOfProduction}/{nametask}/{nametaskType}/{nameCgArtist}', json={"a": [nameOfProduction,nametask]})
-    
-#     #TaskSerializer2 pour la creation de la tache
-#     serializer=TaskSerializer2(data=request.data)
-    
-#     #TaskSerializer2_noId pour obtenir nom du cgartist et nom production relative et non leur id 
-#     serializerNoId=TaskSerializer2_noId(data=request.data)
-    
- 
-   
-#     # if serializerNoId.is_valid():
-#     #     serializerNoId.save()
-
-        
-#     #     print("data serialisées",serializerNoId.data)
-        
-
-#     #     nameProduction=serializerNoId.data["production_name"]
-    
-#     #     nameCgArtist=serializerNoId.data["cgArtist_name"]
-        
-#     #     nametaskType=serializerNoId.data["type"]
-        
-#     #     nametask=serializerNoId.data["name"]
-      
-
-#     return Response (serializerNoId.data)
-
-
-
-
-
-
-#####
 
 
 
@@ -464,6 +307,9 @@ def delId(request,prod_id):
 
 
 
+
+
+
 @api_view(['DELETE'])
 def delTaskId(request,prod_id):
     
@@ -475,14 +321,13 @@ def delTaskId(request,prod_id):
 
 
 
+
+
 @api_view(['GET'])
 def get_PRODUCTION_id(request, task_id):
     task = get_object_or_404(Task2, pk=task_id)
     production_id = task.PRODUCTIONId.id if task.PRODUCTIONId else None
     return Response({'production_id': production_id})
-
-
-###############CORRECTION OUT###
 
 
 
@@ -491,47 +336,18 @@ def get_PRODUCTION_id(request, task_id):
 
 @api_view(['GET'])
 def get_task2_ids_by_production(request, production_id):
-    # Récupérer l'objet Production
     production = get_object_or_404(PRODUCTION, pk=production_id)
     
-    # Récupérer toutes les tâches associées à cette production
     tasks2 = production.production_tasks2.all()  # production_tasks2 est le related_name défini dans la classe Task2
     
-    # Serializer les tâches
     serializer = TaskSerializer2_noId(tasks2, many=True)
     
-    # Retourner la réponse JSON
     return Response(serializer.data)
 
 
 
 
 
-
-##########AUTH
-
-
-def custom_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')  
-        else:
-         
-            pass
-    return render(request, 'login.html')
-
-
-def home_view(request):
-    return render(request, 'home.html')
-
-
-def custom_logout(request):
-    logout(request)
-    return render(request, 'logout.html')
 
 @api_view(['POST'])
 def createUser(request):
@@ -579,15 +395,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         
-        # Ajoutez des claims supplémentaires ici si nécessaire
         return token
 
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        # Ajoutez ici toute logique supplémentaire de validation si nécessaire
-
-        # Ajoutez l'utilisateur dans les validated_data pour l'accéder dans la vue
         data['user'] = self.user
 
         return data
@@ -616,13 +428,13 @@ class CustomTokenObtainPairView3(TokenObtainPairView):
         except UserProfile.DoesNotExist:
             return Response({"detail": "User profile not found"},)
 
-        user_serializer = UserSerializer(user)  # Utilisez votre serializer pour sérialiser l'utilisateur
+        user_serializer = UserSerializer(user)  #  sérialiser l'utilisateur
         user_data = user_serializer.data
         return Response({
             'access': token,
             'refresh': serializer.validated_data['refresh'],
-            'user_type': user_type,  # Inclure le type d'utilisateur dans la réponse
-            'user_organization': user_organization,  # Inclure le type d'utilisateur dans la réponse
+            'user_type': user_type,  # Inclure  type d'utilisateur dans la réponse
+            'user_organization': user_organization,  # Inclure  organization dans la réponse
             
             'user': user_data
         })
@@ -630,6 +442,6 @@ class CustomTokenObtainPairView3(TokenObtainPairView):
 
 
 
-##################
+
 
 
