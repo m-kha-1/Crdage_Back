@@ -27,15 +27,15 @@ from .views import CustomTokenObtainPairView2
 from .views import createdir
 from .views import createTask
 from .views import launch_scene
+from .views import pathAdd
+from .views import vpath
 urlpatterns = [
-  
+    path('vpath/<str:id>/',vpath),
+    path('changepath/<str:id>/',pathAdd),
     path('productions',prod),
     path('tasks2',gettasks2),
     path('task2/<str:task_id>',gettask2Id),
     
-    #liste les chargés de production disponible (
-    #appelée pour créer une production : le formulaire pour en créer une doit permettre d'afficher
-    # et sélectionner un ou plusieurs)  )
     path('producer/', get_producer),
     
     
@@ -43,10 +43,8 @@ urlpatterns = [
     
     path('supervisors/', get_supervisors),
 
-    #affiche une production en particulier à partir de son ID
     path('production/<str:prod_id>/', prodId),
     
-    #supprime une production à partir de son ID
     path('delete/<str:prod_id>/', delId),
     path('deleteTask/<str:prod_id>/', delTaskId),
     

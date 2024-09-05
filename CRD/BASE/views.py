@@ -9,6 +9,7 @@ from django.db.models import F
 
 from .models import*
 from .serializers import *
+from .models import Path
 
 import os
 import shutil
@@ -67,10 +68,19 @@ def createdir(request):
             message_local = req.text
 
         return Response({"message local": message_local})
-
+    
+@api_view(['GET'])
+def vpath(request,id):
+    path=Path.objects.get(id=id)
+    seri=PathSerializer(path)
+    return Response(seri.data["path"])
 
 @api_view(['POST'])
 def createProd(request):
+    
+    path_ngrok=Path.objects.get(id=1)
+    
+    
     serializer=ProdSerializer(data=request.data)
     
     
@@ -116,6 +126,9 @@ def change_path(local_path):
 @api_view(['GET'])
 def call_listei(request, nameprod, nametask, nametasktype):
     
+    path_ngrok=Path.objects.get(id=1)
+
+    
     try:
     
         req=requests.get(f'{path_ngrok}listei/{nameprod}/{nametask}/{nametasktype}')
@@ -139,6 +152,9 @@ def call_listei(request, nameprod, nametask, nametasktype):
 
 @api_view(['POST'])
 def launch_scene(request):
+    
+    path_ngrok=Path.objects.get(id=1)
+
     # Extraire le chemin du fichier .blend des données POST reçues
     blend_file_path = request.data.get('blend_file_path')
 
@@ -166,6 +182,10 @@ def launch_scene(request):
 ####new createtask
 @api_view(['POST'])
 def createTask(request):
+    
+    
+    path_ngrok=Path.objects.get(id=1)
+
     serializer = TaskSerializer2(data=request.data)
     
     if serializer.is_valid():
@@ -441,7 +461,14 @@ class CustomTokenObtainPairView3(TokenObtainPairView):
 
 
 
-
-
-
-
+@api_view(['PUT'])
+def pathAdd(request,id):
+        oldpath=Path.objects.get(id=id)
+        serializer=PathSerializer(oldpath,data=request.data)
+        print(request.data["path"])
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        
+        

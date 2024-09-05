@@ -59,5 +59,8 @@ class Supervisor2Serializer(serializers.ModelSerializer):
         fields='__all__'
         
     
-        
+class PathSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Path
+        fields=['id','path']
         
