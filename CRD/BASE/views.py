@@ -104,6 +104,8 @@ def createProd(request):
 
 @api_view(['GET'])
 def call_listes(request, nameprod, nametask, nametasktype):
+    path_ngrok=Path.objects.get(id=1)
+    
     req=requests.get(f'{path_ngrok}listes/{nameprod}/{nametask}/{nametasktype}')
     if req.status_code == 200:
         return Response (req.json(),status=200)
