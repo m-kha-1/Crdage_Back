@@ -29,7 +29,9 @@ from .views import createTask
 from .views import launch_scene
 from .views import pathAdd
 from .views import vpath
+from .views import image_production
 urlpatterns = [
+    path('image/<str:idprod>/',image_production),
     path('vpath/<str:id>/',vpath),
     path('changepath/<str:id>/',pathAdd),
     path('productions',prod),

@@ -37,7 +37,7 @@ def start(request):
 
 # path_ngrok="https://f87f-93-2-82-77.ngrok-free.app/"
 # path_ngrok="http://127.0.0.1:8080/"
-path_ngrok="https://34f3-93-2-82-77.ngrok-free.app/"
+# path_ngrok="https://34f3-93-2-82-77.ngrok-free.app/"
 
 # @api_view(['GET'])
 # def createdir(request):
@@ -111,6 +111,29 @@ def call_listes(request, nameprod, nametask, nametasktype):
         return Response (req.json(),status=200)
     else:
         return Response ({"error":"no scenes found"})
+    
+    
+@api_view(['GET'])
+def image_production(request, idprod):
+        path_ngrok=Path.objects.get(id=1)
+        mediaPath="http://localhost:8080/media/"
+        try:
+            production = PRODUCTION.objects.get(id=idprod)
+            serializer=ProdSerializer(production)
+            nameprod=serializer.data["name"]
+            request=requests.get(f'{path_ngrok}vignette/{nameprod}')
+            p=request.json()
+            path_image=mediaPath+nameprod+"/presentation/"+p["vignette"]
+            return JsonResponse({"vignette":path_image},status=200)
+        except Exception as e:
+            return JsonResponse({"err":str(e)},status=500)
+  
+     
+        
+        
+        
+        # req=requests.get(f'{path_ngrok}vignette/{np}')
+
 
 
 
