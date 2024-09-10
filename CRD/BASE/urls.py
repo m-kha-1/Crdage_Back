@@ -9,6 +9,7 @@ from .views import createUser
 from .views import start
 from .views import createProd
 from .views import call_listei,call_listes
+from .views import updateTaskName
 from django.contrib.auth.views import LoginView,LogoutView
 # from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -30,7 +31,17 @@ from .views import launch_scene
 from .views import pathAdd
 from .views import vpath
 from .views import image_production
+from .views import updateSup
+from .views import updateArtist
+from .views import updateDueDate
+from .views import updateStatus
+
 urlpatterns = [
+    path('updateTaskName/<str:id>',updateTaskName),
+    path('updatesup/<str:id>',updateSup),
+    path('updateartist/<str:id>',updateArtist),
+    path('updateduedate/<str:id>',updateDueDate),
+    path('updatestatus/<str:id>',updateStatus),
     path('image/<str:idprod>/',image_production),
     path('vpath/<str:id>/',vpath),
     path('changepath/<str:id>/',pathAdd),

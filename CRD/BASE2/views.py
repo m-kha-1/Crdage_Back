@@ -63,13 +63,7 @@ def liste_fichiers(request, np, tt,nt):
     except RequestException as e:
         return Response({'message': 'Erreur de connexion au serveur distant'}, status=500)
     
-# @api_view(['GET'])
-# def liste_fichiers(request, np):
-#      try:
-#         url = f'http://localhost:8080/{np}/'
-#         path_img=  '.png'
-#      except RequestException as e:
-#          return Response ({'message': 'Erreur de connexion au serveur'},status=500)
+
         
 
 
@@ -114,53 +108,9 @@ def image_production(request, np):
     
     
     
-    
-    
-    
-    
-# @api_view(['GET'])
-# def liste_scenes(request, np, tt,nt):
-#     def versions_list_images(url, depth=0, max_depth=3):
-#         try:
-#             response = requests.get(url)
-#             response.raise_for_status()
-            
-#             if response.status_code == 200:
-#                 content = response.text
-#                 soup = BeautifulSoup(content, "html.parser")
-#                 paths = soup.find_all("a")
-#                 PATHS = []
 
-#                 for p in paths:
-#                     path = urljoin(url, p.get("href"))
-#                     PATHS.append(path)
-
-#                 if depth < max_depth:
-#                     for path in PATHS[:]:  # Utilisation de [:] pour éviter les modifications en cours d'itération
-#                         sub_paths = versions_list_images(path, depth + 1, max_depth)
-#                         PATHS.extend(sub_paths)
-
-#                 return PATHS
-
-#         except RequestException as e:
-#             return []
-
-#     try:
-#         url = f'http://localhost:8080/{np}/{tt}/{nt}/PUBLISH/'
-#         PATHS = versions_list_images(url)
-        
-#         # Filtrer les chemins pour ne conserver que ceux se terminant par '.png'
-#         PATHS = [path for path in PATHS if path.endswith('.blend')]
-        
-#         return Response(PATHS)
-
-#     except RequestException as e:
-#         return Response({'message': 'Erreur de connexion au serveur distant'}, status=500)
     
-    
-    
-    
-    import os
+import os
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
@@ -189,18 +139,6 @@ def liste_images(request, organization, np, tt, nt):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @api_view(['GET'])
 def liste_images(request,organization, np, tt, nt):
    
@@ -209,7 +147,6 @@ def liste_images(request,organization, np, tt, nt):
     
     print ("stockage:",stockage.media_root)
     base_dir = os.path.join(stockage.media_root, np, tt, nt, 'PUBLISH')
-    # base_url = request.build_absolute_uri('/serve_file/')
     
     try :
         if not os.path.exists(base_dir):
@@ -220,18 +157,12 @@ def liste_images(request,organization, np, tt, nt):
                     for file in files
                     if file.endswith('.png')]
         
-        # image_urls = [f"{base_url}{organization}/{np}/{tt}/{nt}/{file}"
-        #               for file in all_files]
-        
-        
-
-        
-        # return Response(all_files, status=200)
+   
+     
         return Response(all_files, status=200)
         
         
-        
-
+    
     except Exception as e:
         return JsonResponse({'message':str(e)},status=500)
 
@@ -243,39 +174,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import os
 
-# @api_view(['GET'])
-# def liste_images(request, organization, np, tt, nt):
-#     stockage = Stockage.objects.get(name=organization)
-#     base_dir = os.path.join(stockage.media_root, np, tt, nt, 'PUBLISH')
 
-#     # Construire l'URL de base pour les fichiers
-#     base_url = request.build_absolute_uri('/serve_file/')
-
-#     try:
-#         if not os.path.exists(base_dir):
-#             return JsonResponse({'message': f'{base_dir} Directory does not exist'}, status=404)
-
-#         # Créer les chemins relatifs
-#         all_files = [os.path.relpath(os.path.join(root, file), base_dir)
-#                      for root, dirs, files in os.walk(base_dir)
-#                      for file in files
-#                      if file.endswith('.png')]
-
-#         # Créer les URLs complètes pour les images avec correction des barres obliques
-#         image_urls = [f"{base_url}{organization}/{np}/{tt}/{nt}/{file.replace(os.sep, '/')}"
-#                       for file in all_files]
-
-#         return Response(image_urls, status=200)
-#     except Exception as e:
-#         return JsonResponse({'message': str(e)}, status=500)
-
-    
-    
         
-
-
-
-
 
 
 ## sans http server
@@ -293,10 +193,7 @@ def liste_scenes2(request,organization, np, tt, nt):
         if not os.path.exists(base_dir):
             return JsonResponse({'message': 'Directory does not exist'}, status=404)
 
-        # Lister tous les fichiers .blend dans le répertoire
-        
-        # numbers = [1, 2, 3, 4, 5]
-        # doubled_numbers = [number * 2 for number in numbers]
+   
         
         
         all_files = [os.path.join(root, file)
@@ -337,12 +234,7 @@ def lancer_scene(request):
     
 from .serializers import StockageSerializer
 from .models import Stockage
-# @api_view(['GET'])
-# def get_stockage(request,name):
-#     stockage=Stockage.get(name=name)
-#     serialiser=StockageSerializer(stockage)
-    
-#     return JsonResponse(serialiser.data)
+
     
     
     
